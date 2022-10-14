@@ -1,0 +1,38 @@
+<%= render "shared/header" %>
+<div class="search-box">
+    <button id="myBtn" class='btn btn-primary'>Create new Subject</button>
+    <form action="" class="nav-end">
+        <input type="text" name="subject[title]" placeholder="Search Subject">
+        <input type="submit" value="Search">
+    </form>
+</div>
+<div class="item-box">
+    <h3><a href="/subjects/1">Title</a></h3>
+    <p>Subject Teacher</p>
+</div>
+<div class="item-box">
+    <h3><a href="">Title</a></h3>
+    <p>Subject Teacher</p>
+</div>
+<div class="item-box">
+    <h3><a href="">Title</a></h3>
+    <p>Subject Teacher</p>
+</div>
+<div class="item-box">
+    <h3><a href="">Title</a></h3>
+    <p>Subject Teacher</p>
+</div>
+<div class="item-box">
+    <h3><a href="">Title</a></h3>
+    <p>Section</p>
+</div>
+<% content_for :dialog_body do %>
+    <form action="/subject/create" method="post">
+        <label>Title</label>
+        <input type="text" name="subject[title]">
+        <label>Section</label>
+        <input type="text" name="subject[section]">
+        <input type="submit" value="Create">
+    </form>
+<% end %>
+<%= render "shared/dialog" %>

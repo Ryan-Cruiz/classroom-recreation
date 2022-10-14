@@ -1,0 +1,10 @@
+<div class="login-reg">
+    <form action='/users/login' method='post'>
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+        <p>Email <input type='text' name='user[email]'></p>
+        <p>Password <input type='password' name='user[password]'></p>
+        <input type='submit' value='Login'>
+        <a href='/register'>Create new User</a>
+    </form>
+</div>
+

@@ -1,0 +1,10 @@
+<%= render "shared/header"%>
+<div class="material-box">
+    <form action="/subjects/1/post/1" method="post">
+        <label>Title: <input type="text" name="material[title]"></label>
+        <input type="date" name="material[due_date]">
+        <label class='d-block'>Instructions: (Optional)</label>
+        <textarea name="material[content]"></textarea>
+        <input type="submit" value="Create">
+    </form>
+</div>

@@ -1,0 +1,36 @@
+<%= render "shared/header"%>
+<div class="subject-head">
+    <p><h2>Subject Title</h2>  Section</p>
+    <div class="subject-nav">
+        <a href="#">Students</a>
+    </div>
+</div>
+<div class="subject-box">
+    <form action="" method="post">
+        <label>My name: <textarea name="comment[content]" placeholder='Announce Something...'></textarea></label>
+        <input type="submit" value="Post">
+    </form>
+    <a href='/post/new' class='btn btn-primary'>Create</a>
+    <div class="topic-box">
+        <a href="">
+            <div class="topic-item">
+                <p>test 2</p>
+            </div>
+        </a>
+        <a href="">
+            <div class="topic-item">
+                <p>test 1</p>
+            </div>
+        </a>
+        <a href="">
+            <div class="topic-item">
+                <p>with due 1</p>
+            </div>
+        </a>
+        <a href="/subjects/1/post/1">
+            <div class="topic-item">
+                <p>lesson 1</p>
+            </div>
+        </a>
+    </div>
+</div>
