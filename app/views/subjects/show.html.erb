@@ -1,16 +1,16 @@
 <%= render "shared/header"%>
 <div class="subject-head">
-    <p><h2>Subject Title</h2>  Section</p>
+    <p><h2><%= @subject.title %></h2>  <%= @subject.section%></p>
     <div class="subject-nav">
-        <a href="#">Students</a>
+        <a href="/subjects/<%= @subject.id %>/students">Students</a>
     </div>
 </div>
 <div class="subject-box">
     <form action="" method="post">
         <label>My name: <textarea name="comment[content]" placeholder='Announce Something...'></textarea></label>
-        <input type="submit" value="Post">
+        <input type="submit" value="Announce">
     </form>
-    <a href='/post/new' class='btn btn-primary'>Create</a>
+    <button id="myBtn" class='btn btn-primary'>Create Post</button>
     <div class="topic-box">
         <a href="">
             <div class="topic-item">
@@ -27,10 +27,22 @@
                 <p>with due 1</p>
             </div>
         </a>
-        <a href="/subjects/1/post/1">
+        <a href="/subjects/<%= @subject.id %>/post/1">
             <div class="topic-item">
                 <p>lesson 1</p>
             </div>
         </a>
     </div>
 </div>
+<% content_for :dialog_body do %>
+    <div class="material-box">
+    <form action="/material/create" method="post">
+        <label>Title: <input type="text" name="material[title]"></label>
+        <label>Due Date:<input type="date" name="material[due_date]"></label>
+        <label class='d-block'>Instructions:</label>
+        <textarea name="material[content]"></textarea>
+        <input type="submit" value="Create">
+    </form>
+</div>
+<% end %>
+<%= render 'shared/dialog'%>

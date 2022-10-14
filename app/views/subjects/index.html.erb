@@ -1,11 +1,21 @@
 <%= render "shared/header" %>
 <div class="search-box">
+    <% if @id == '2' %>
     <button id="myBtn" class='btn btn-primary'>Create new Subject</button>
+    <% end %>
     <form action="" class="nav-end">
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
         <input type="text" name="subject[title]" placeholder="Search Subject">
         <input type="submit" value="Search">
     </form>
 </div>
+<% @subjects.each do |s| %>
+<% if @id == '2' %>
+<div class="item-box">
+    <h3><a href="/subjects/<%= s.subject_id %>"><%= Subject.find(s.subject_id).title%></a></h3>
+    <p><%= Subject.find(s.subject_id).section %></p>
+</div>
+<% else %>
 <div class="item-box">
     <h3><a href="/subjects/1">Title</a></h3>
     <p>Subject Teacher</p>
@@ -22,12 +32,11 @@
     <h3><a href="">Title</a></h3>
     <p>Subject Teacher</p>
 </div>
-<div class="item-box">
-    <h3><a href="">Title</a></h3>
-    <p>Section</p>
-</div>
+<% end %>
+<% end %>
 <% content_for :dialog_body do %>
-    <form action="/subject/create" method="post">
+    <form action="/subjects" method="post">
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
         <label>Title</label>
         <input type="text" name="subject[title]">
         <label>Section</label>

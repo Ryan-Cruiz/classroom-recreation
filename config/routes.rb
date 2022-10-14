@@ -4,14 +4,20 @@ Rails.application.routes.draw do
   get '/login' => 'users#index'
   get '/register' => "users#new"
   get '/profile' => 'users#show'
-
+  post '/users/login' => 'users#login'
+  post '/users' => 'users#create'
+  patch '/profile/update_info/:id' => 'users#update_info'
+  patch '/profile/update_password/:id' => 'users#update_password'
+  
   # Subject
-  get 'classes' => 'subjects#index'
-
+  get 'subjects' => 'subjects#index'
+  get 'log_out' => 'subjects#log_out'
   #fill before this
+  post 'subjects' => 'subjects#create'
   patch 'subject/:id' => 'subjects#update'
   delete 'subjects/:id' => 'subjects#delete'
   get 'subjects/:id' => 'subjects#show'
+  get 'subjects/:id/students' => 'subjects#students'
 
   # Topic 
   get 'post/new' => 'topic#new'
