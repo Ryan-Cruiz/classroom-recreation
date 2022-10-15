@@ -107,10 +107,7 @@ header h2, header div{
             box-shadow: 2px 2px lightgray;
         }
 /*Material box in topic new*/
-.material-box{
-    outline: 1px solid black;
-}
-    .material-box form > label{
+.material-box form > label{
         margin:5px;
     }
     .material-box form > textarea{
@@ -121,6 +118,17 @@ header h2, header div{
     }
     .material-box form input[type=submit]{
         margin:10px;
+    }
+/*Student Page*/
+.user-main-container{
+    border:1px solid black;
+    width: 600px;
+    margin:0px auto;
+}
+    .user-container{
+        border:1px solid lightgray;
+        border-radius: 3px;
+        margin:2px;
     }
 
 /* The Modal (background) */

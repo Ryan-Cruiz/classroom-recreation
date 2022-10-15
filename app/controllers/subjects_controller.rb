@@ -1,14 +1,21 @@
 class SubjectsController < ApplicationController
     def index
-        check_status
-        @id = User.find(session[:id]).user_type
-        @subjects = SpecificSubject.where(user: session[:id])
+        if !session[:id]
+            redirect_to '/login'
+        else
+            @subjects = SpecificSubject.where(user: session[:id])
+            @id = User.find(session[:id]).user_type
+        end
     end
     def show
+        check_status
+        @posts = Post.where(subject: params[:id]).order("created_at DESC")
         @subject = Subject.find(params[:id])
+        @user = User.find(session[:id])
+        @comments = Comment.where(imageable: Subject.find(params[:id]))
     end
-    def students
-        @users = SpecificSubject.where(subject: params[:id])
+    def search
+        # @subjects = SpecificSubject.where(user: session[:id])
     end
     def create
         subject = Subject.new(subject_params)

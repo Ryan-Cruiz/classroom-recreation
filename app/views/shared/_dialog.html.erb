@@ -1,14 +1,13 @@
-<!-- The Modal -->
-<div id="myModal" class="dialog">
-<!-- Modal content -->
-<div class="dialog-content">
-<div class="dialog-header">
-    <span class="close">&times;</span>
-    <h2>New</h2>
-</div>
-<div class="dialog-body">
-    <%= yield :dialog_body %>
-</div>
-</div>
-
-</div>
+        <!-- The Modal -->
+    <div id="myModal" class="dialog">
+        <!-- Modal content -->
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <span class="close">&times;</span>
+                <h2> <%= yield :dialog_title %></h2>
+            </div>
+            <div class="dialog-body material-box">
+                <%= yield :dialog_body %>
+            </div>
+        </div>
+    </div>

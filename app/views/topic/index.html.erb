@@ -1,0 +1,78 @@
+<%= render 'shared/header'%>
+<div class="post-box m-3">
+   
+    <h2><%= @post.title %></h2>
+    <% if @user.user_type == '2' %>
+    <div class="nav-end">
+        <button id="myBtn" class='btn btn-link'>Edit</button>
+        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+    </div>
+    <% end %>
+    <% if @post.due_date != nil %>
+        <p>Due Until: <%= @post.due_date.strftime('%d/%m/%Y - %H:%M%p')%></p>
+    <% end %>
+    <div class='border m-4 mt-5'>
+        <p><strong>Instructions:</strong></p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum voluptatibus distinctio hic quos ducimus ad.</p>
+    </div>
+    <div class="comment-box">
+        <form action="" method="post">
+            <label>My name: <textarea name="comment[content]" placeholder='Comment Something...'></textarea></label>
+            <input type="submit" value="Post">
+        </form>
+        <div class="comment-section">
+            <p>Name1: Lorem ipsum dolor sit amet.</p>
+            <div class="replies-section">
+                <p>Name2: Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+            </div>
+            <div class="replies-section">
+                <p>Name2: Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+            </div>
+            <div class="replies-section">
+                <p>Name2: Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+            </div>
+            <form action="" method="post">
+                <label>My name: <textarea name="comment[content]" placeholder='Reply Something...'></textarea></label>
+                <input type="submit" value="Post">
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Deleting <%= @post.title %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p> Deleting this will delete all of its relation. Are you sure? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <form action="/subjects/<%= @subject.id %>/post/<%= @post.id %>" method='post'>
+            <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+            <input type='hidden' name='_method' value='delete'>
+            <input type="submit" class="btn btn-danger" value='Yes, I understand'>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :dialog_body do %>
+    <% content_for :dialog_title do %>Edit<% end %>
+    <form action="subjects/<%= @subject.id %>/post/<%= @post.id %>" method="post">
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+        <input type='hidden' name='_method' value='patch'>
+        <label>Title: <input type="text" name="material[title]" value='<%= @post.title%>'></label>
+        <% if @post.due_date != nil %>
+        <label>Due Date:<input type="date" value="<%= @post.due_date.strftime('%Y-%m-%d')%>" name="material[due_date]" ></label>
+        <% end %>
+        <label class='d-block'>Instructions:</label>
+        <textarea name="material[content]"><%= @post.content%></textarea>
+        <input type="submit" value="Edit" class='btn btn-success'>
+    </form>
+<% end %>
+<%= render 'shared/dialog'%>

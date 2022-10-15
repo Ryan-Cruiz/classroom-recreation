@@ -1,0 +1,36 @@
+<%= render 'shared/header'%>
+<div class="user-main-container">
+    <h2>All User in this Subject</h2>
+    <% @users.each do |user| %>
+        <% if User.find(user.user_id).user_type == '2' %>
+        <% if @count == 0 %>
+        <button id="myBtn" class='btn btn-primary'>Add</button>
+        <% end %>
+    <div class="user-container">
+        <p><%= User.find(user.user_id).full_name %> - Teacher</p>
+    </div>
+    <% else %>
+    <div class="user-container">
+        <p class='d-inline-block'><%= User.find(user.user_id).full_name %> - Student</p>
+        <form action='/students/<%= @subject_id %>/delete/<%= user.user_id %>' method='post' class='d-inline-block'>
+            <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+            <input type='hidden' name='_method' value='delete'>
+        <input type='submit' class='btn btn-link' value='Remove'>
+    </form>
+    </div>
+        <%end %>
+    <% end %>
+</div>
+<% content_for :dialog_body do %>
+    <% content_for :dialog_title do %>Add new Student<% end %>
+<form action="/students/search" method="post">
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+        <label>People</label>
+        <input type="text" name="student[name]">
+        <input type="submit" value="Search" >
+    </form>
+    <div id='users'>
+        <%= render 'shared/list'%>
+    </div>
+<% end %>
+<%= render "shared/dialog" %>

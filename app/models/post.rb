@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   belongs_to :user
   belongs_to :subject
-  validates :title,:instructions, presence: true
+  has_many :comments, dependent: :destroy
+  validates :title,:content, presence: true
 end

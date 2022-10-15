@@ -3,7 +3,7 @@
     <% if @id == '2' %>
     <button id="myBtn" class='btn btn-primary'>Create new Subject</button>
     <% end %>
-    <form action="" class="nav-end">
+    <form action="/subject/search" class="nav-end" method='post'>
         <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
         <input type="text" name="subject[title]" placeholder="Search Subject">
         <input type="submit" value="Search">
@@ -17,31 +17,20 @@
 </div>
 <% else %>
 <div class="item-box">
-    <h3><a href="/subjects/1">Title</a></h3>
-    <p>Subject Teacher</p>
-</div>
-<div class="item-box">
-    <h3><a href="">Title</a></h3>
-    <p>Subject Teacher</p>
-</div>
-<div class="item-box">
-    <h3><a href="">Title</a></h3>
-    <p>Subject Teacher</p>
-</div>
-<div class="item-box">
-    <h3><a href="">Title</a></h3>
-    <p>Subject Teacher</p>
+    <h3><a href="/subjects/<%= s.subject_id %>"><%= Subject.find(s.subject_id).title%></a></h3>
+    <p>Teacher: <%= SpecificSubject.where(subject: s.subject_id).first.user.full_name %></p>
 </div>
 <% end %>
 <% end %>
 <% content_for :dialog_body do %>
+    <% content_for :dialog_title do %>New Subject<% end %>
     <form action="/subjects" method="post">
         <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
         <label>Title</label>
         <input type="text" name="subject[title]">
         <label>Section</label>
         <input type="text" name="subject[section]">
-        <input type="submit" value="Create">
+        <input type="submit" value="Create" class='btn btn-success'>
     </form>
 <% end %>
 <%= render "shared/dialog" %>
