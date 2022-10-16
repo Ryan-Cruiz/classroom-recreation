@@ -1,27 +1,19 @@
 <%= render "shared/header" %>
-<div class="search-box">
-    <% if @id == '2' %>
-    <button id="myBtn" class='btn btn-primary'>Create new Subject</button>
-    <% end %>
-    <form action="/subject/search" class="nav-end" method='post'>
+<div class="search-box row">
+    <div class='col-md-6 '>
+    <% if @user == '2' %>
+        <button id="myBtn" class='btn btn-primary'>Create new Subject</button>
+        <% end %>
+    </div>
+    <form action="/subjects/search" data-js-subject-form='true' accept-charset='UTF-8' data-remote='true' class="nav-end col-md-4 " method='post'>
         <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
         <input type="text" name="subject[title]" placeholder="Search Subject">
         <input type="submit" value="Search">
     </form>
 </div>
-<% @subjects.each do |s| %>
-<% if @id == '2' %>
-<div class="item-box">
-    <h3><a href="/subjects/<%= s.subject_id %>"><%= Subject.find(s.subject_id).title%></a></h3>
-    <p><%= Subject.find(s.subject_id).section %></p>
+<div id='subjects'>
+<%= render 'shared/subjects'%>
 </div>
-<% else %>
-<div class="item-box">
-    <h3><a href="/subjects/<%= s.subject_id %>"><%= Subject.find(s.subject_id).title%></a></h3>
-    <p>Teacher: <%= SpecificSubject.where(subject: s.subject_id).first.user.full_name %></p>
-</div>
-<% end %>
-<% end %>
 <% content_for :dialog_body do %>
     <% content_for :dialog_title do %>New Subject<% end %>
     <form action="/subjects" method="post">

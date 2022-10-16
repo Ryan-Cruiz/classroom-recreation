@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_15_152130) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_16_050629) do
   create_table "comments", force: :cascade do |t|
     t.string "imageable_type", null: false
     t.integer "imageable_id", null: false
@@ -20,6 +20,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_15_152130) do
     t.datetime "updated_at", null: false
     t.index ["imageable_type", "imageable_id"], name: "index_comments_on_imageable"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "postcomments", force: :cascade do |t|
+    t.text "content"
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_postcomments_on_post_id"
+    t.index ["user_id"], name: "index_postcomments_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -63,6 +73,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_15_152130) do
   end
 
   add_foreign_key "comments", "users"
+  add_foreign_key "postcomments", "posts"
+  add_foreign_key "postcomments", "users"
   add_foreign_key "posts", "subjects"
   add_foreign_key "posts", "users"
   add_foreign_key "specific_subjects", "subjects"

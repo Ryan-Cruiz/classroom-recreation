@@ -4,7 +4,7 @@ class SubjectsController < ApplicationController
             redirect_to '/login'
         else
             @subjects = SpecificSubject.where(user: session[:id])
-            @id = User.find(session[:id]).user_type
+            @user = User.find(session[:id]).user_type
         end
     end
     def show
@@ -12,10 +12,13 @@ class SubjectsController < ApplicationController
         @posts = Post.where(subject: params[:id]).order("created_at DESC")
         @subject = Subject.find(params[:id])
         @user = User.find(session[:id])
-        @comments = Comment.where(imageable: Subject.find(params[:id]))
+        @comments = Comment.where(imageable: Subject.find(params[:id])).order('created_at DESC')
     end
     def search
-        # @subjects = SpecificSubject.where(user: session[:id])
+        @user = User.find(session[:id]).user_type
+        @subjects = SpecificSubject.joins(:user).left_joins(:subject).where("users.id = ? AND subjects.title LIKE ?", session[:id],"%#{params[:subject][:title]}%")
+        render partial: 'shared/subjects', locals: {subjects: @subjects,user: @user}
+        # puts "\n\n\n\n\n\n#{@subjects.inspect}\n\n\n\n\n\n"
     end
     def create
         subject = Subject.new(subject_params)

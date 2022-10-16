@@ -8,16 +8,11 @@ class StudentsController < ApplicationController
             @search_query = User.where('first_name || last_name LIKE ?', "%%")
             @specific = Subject.find(params[:id]).specific_subjects
         end
-        
-        # respond_to do |format|
-        #     format.html
-        #     format.js
-
-        # end
     end
     def search
+        @subject_id = params[:id]
         @search_query = User.where('first_name || last_name LIKE ?', "%#{params[:student][:name]}%")
-        
+        render :partial => 'shared/list', :formats => [:html], locals: {search_query: @search_query,subject_id: @subject_id}
     end
     def create
         # fail
