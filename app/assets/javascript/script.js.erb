@@ -24,5 +24,11 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
-
+$(document).on('ajax:success','[data-js-subject-form]', function(event, data, status, xhr){
+    $('#subjects').html(xhr.responseText);
+  });
+$(document).on('ajax:success','[data-js-user-form]', function(event, data, status, xhr){
+    $('#users').html(xhr.responseText);
+  });
 });
+

@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     has_many :subjects
+    has_many :specific_subjects
     has_many :posts
     # has_many :friends, through: :friendships
     EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]+)\z/i

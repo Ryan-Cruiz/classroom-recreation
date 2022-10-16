@@ -1,48 +1,55 @@
 <%= render "shared/header"%>
-<div class="subject-head">
-    <p><h2><%= @subject.title %></h2>  <%= @subject.section%></p>
-    <div class="subject-nav">
-        <a href="/subjects/<%= @subject.id %>/students">Students</a>
+    <div class="subject-head card">
+        <div class="card-body">
+            <p><h2><%= @subject.title %></h2>  <%= @subject.section%></p>
+            <% if @user.user_type == '2' %>
+                <a href="/subjects/<%= @subject.id %>/students">Students</a>
+            <% end %>
+        </div>
     </div>
-</div>
-<div class="subject-box">
-    <form action="" method="post">
-        <label>My name: <textarea name="comment[content]" placeholder='Announce Something...'></textarea></label>
-        <input type="submit" value="Announce">
-    </form>
-    <button id="myBtn" class='btn btn-primary'>Create Post</button>
-    <div class="topic-box">
-        <a href="">
-            <div class="topic-item">
-                <p>test 2</p>
+    <div class='row'>
+        <div class="subject-box col-md-6">
+        <% if @user.user_type == '2' %>
+            <button id="myBtn" class='btn btn-primary'>Create Post</button>
+        <% end %>
+        <% @posts.each do |post| %>
+            <div class="topic-box m-4">
+                <a href="/subjects/<%= @subject.id %>/post/<%= post.id %>" class='d-block'>
+                    <div class="topic-item">
+                        <p><%= User.find(post.user_id).full_name %> Posted: <%= post.title%></p>
+                    </div>
+                </a>
             </div>
-        </a>
-        <a href="">
-            <div class="topic-item">
-                <p>test 1</p>
-            </div>
-        </a>
-        <a href="">
-            <div class="topic-item">
-                <p>with due 1</p>
-            </div>
-        </a>
-        <a href="/subjects/<%= @subject.id %>/post/1">
-            <div class="topic-item">
-                <p>lesson 1</p>
-            </div>
-        </a>
+        <% end %>
+        </div>
+        <div class="subject-box col-md-6">
+            <form action="/subjects/<%= @subject.id %>/comment" method="post">
+                <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                <label><%= @user.full_name %>:</label>
+                <div class="form-floating">
+                    <textarea class="form-control" name="comment[content]" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">Announce</label>
+                </div>
+                <input type="submit" value="Post" class='btn btn-success m-2'>
+            </form>
+            <h3>Bulletin Post</h3>
+        <% @comments.each do |c|%>
+        <div class='border border-right-0 m-2'>
+            <p><%= User.find(c.user_id).full_name%> (<%= c.created_at.strftime("%I:%M%p %F")%>):</p>
+            <p> <%= c.content %> </p>
+        </div>
+        <% end %>
+        </div>
     </div>
-</div>
-<% content_for :dialog_body do %>
-    <div class="material-box">
-    <form action="/material/create" method="post">
-        <label>Title: <input type="text" name="material[title]"></label>
-        <label>Due Date:<input type="date" name="material[due_date]"></label>
-        <label class='d-block'>Instructions:</label>
-        <textarea name="material[content]"></textarea>
-        <input type="submit" value="Create">
-    </form>
-</div>
-<% end %>
-<%= render 'shared/dialog'%>
+        <% content_for :dialog_body do %>
+            <% content_for :dialog_title do %>New Post<% end %>
+                <form action="/subjects/<%= @subject.id %>/post" method="post">
+                    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                    <label>Title: <input type="text" name="topic[title]"></label>
+                    <label>Due Date:<input type="date" name="topic[due_date]"></label>
+                    <label class='d-block'>Instructions:</label>
+                    <textarea name="topic[content]"></textarea>
+                    <input type="submit" value="Create" class='btn btn-success'>
+                </form>
+        <% end %>
+    <%= render 'shared/dialog'%>

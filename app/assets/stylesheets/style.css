@@ -1,13 +1,13 @@
 /*Header*/
 header h2, header div{
     display: inline-block;
-    margin:20px;
+    /* margin:20px; */
 }
 .nav-end{
     text-align: right;
     display: inline-block;
-    position: absolute;
-    right: 10px;
+    /* position: absolute; */
+    /* right: 10px; */
     
 }
 .search-box{
@@ -56,20 +56,9 @@ header h2, header div{
     margin:5px;
     padding:5px;
 }
-    .subject-nav{
-        text-align: center;
-    }
-        .subject-nav a{
-            padding:5px;
-            margin-bottom:10px;
-            border:1px solid black;
-        }
 .subject-box{
     margin:0px auto;
 }
-    .subject-box > form {
-        text-align: center;
-    }
         .subject-box form label textarea, .comment-box form label textarea{
             vertical-align: middle;
             width: 500px;
@@ -103,14 +92,8 @@ header h2, header div{
             width:95%;
             margin:0px auto;
         }
-        .comment-section p, .replies-section p {
-            box-shadow: 2px 2px lightgray;
-        }
 /*Material box in topic new*/
-.material-box{
-    outline: 1px solid black;
-}
-    .material-box form > label{
+.material-box form > label{
         margin:5px;
     }
     .material-box form > textarea{
@@ -122,6 +105,12 @@ header h2, header div{
     .material-box form input[type=submit]{
         margin:10px;
     }
+/*Student Page*/
+.user-main-container{
+    border:1px solid black;
+    width: 600px;
+    margin:0px auto;
+}
 
 /* The Modal (background) */
 .dialog {
