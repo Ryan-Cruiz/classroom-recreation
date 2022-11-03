@@ -1,0 +1,10 @@
+<%= form_with url: "/subjects/@subject.id/comment", method: :post do |form| %>
+    <div>
+        <%= form.label :body, style: "display: block" %>
+        <%= form.rich_text_area :body %>
+    </div>
+    <div>
+        <%= form.submit "Post" %>
+    </div>
+<% end %>
+

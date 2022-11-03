@@ -1,0 +1,10 @@
+<% @subjects.each do |s| %>
+    <div class="item-box">
+        <h3><a href="/subjects/<%= s.subject_id %>"><%= Subject.find(s.subject_id).title%></a></h3>
+        <% if @user == '2' %>
+            <p><%= Subject.find(s.subject_id).section %></p>
+        <% else %>
+            <p>Teacher: <%= SpecificSubject.find_by(subject_id: s.subject_id).user.full_name %></p>
+        <% end %>
+    </div>
+<% end %>

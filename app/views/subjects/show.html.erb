@@ -1,0 +1,62 @@
+<%= render "shared/header"%>
+    <div class="subject-head card">
+        <div class="card-body">
+            <p><h2><%= @subject.title %></h2>  <%= @subject.section%></p>
+            <a href="/subjects/<%= @subject.id %>/students">Students</a>
+        </div>
+    </div>
+    <div class='row'>
+        <div class="subject-box col-md-6">
+        <% if @user.user_type == '2' %>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPost_dialog">Create Post</button>
+        <% end %>
+        <% @posts.each do |post| %>
+            <div class="topic-box m-4">
+                <a href="/subjects/<%= @subject.id %>/post/<%= post.id %>" class='d-block'>
+                    <div class="topic-item">
+                        <p><%= User.find(post.user_id).full_name %> Posted: <%= post.title%></p>
+                    </div>
+                </a>
+            </div>
+        <% end %>
+        </div>
+        <div class="subject-box col-md-6">
+            <form action="/subjects/<%= @subject.id %>/comment" method="post" class='needs-validation' novalidate>
+                <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                <label><%= @user.full_name %>:</label>
+                <input type="hidden" name="comment[content]" id="trix_input_11" autocomplete="off" required/>
+                <trix-editor id="comment[content]" input="trix_input_11" class="trix-content form-control" required data-direct-upload-url="http://localhost:3000/rails/active_storage/direct_uploads" data-blob-url-template="http://localhost:3000/rails/active_storage/blobs/redirect/:signed_id/:filename"></trix-editor>
+                <input type="submit" value="Post" class='btn btn-success m-2'>
+            </form>
+            <h3>Bulletin Post</h3>
+        <% @comments.each do |c|%>
+        <div class='border border-right-0 m-2'>
+            <p><%= User.find(c.user_id).full_name%> (<%= c.created_at.strftime("%I:%M%p %F")%>):</p>
+            <%= c.content %>
+        </div>
+        <% end %>
+        </div>
+    </div>
+        <% content_for :dialog_body do %>
+            <% content_for :dialog_attr do %> id="createPost_dialog" <% end %>
+            <% content_for :dialog_title do %>New Post<% end %>
+                <form action="/subjects/<%= @subject.id %>/post" method="post">
+                    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                    <label>Title: <input type="text" name="topic[title]"></label>
+                    <label>Due Date:<input type="date" name="topic[due_date]"></label>
+                    <div class="form-floating">
+                    <textarea class="form-control" name="topic[content]" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">Instructions</label>
+                    </div>
+                    <div class='modal-footer'>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" value="Create" class='btn btn-success'>
+                    </div>
+                </form>
+        <% end %>
+    <%= render 'shared/dialog'%>
+
+
+
+
+    

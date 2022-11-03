@@ -1,0 +1,37 @@
+<%= render 'shared/header'%>
+<div class="container-sm">
+    <h2>All User in this Subject</h2>
+<% @users.each do |user| %>
+    <% if User.find(user.user_id).user_type == '2' %>
+   
+    <h3 class='border m-2'>Teacher</h3>
+    <div class="m-2">
+        <p><%= User.find(user.user_id).full_name %></p>
+    </div>
+    <h3 class='border'>Students</h3>
+    <% if @count == 0 && @current_user == '2' %>
+    <div class='mx-2 text-end'>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#student_dialog">Add</button>
+    </div>
+    <% end %>
+    <% else %>
+    <div class="m-2">
+        <p class='d-inline-block'><%= User.find(user.user_id).full_name %></p>
+    </div>
+        <%end %>
+    <% end %>
+</div>
+<% content_for :dialog_body do %>
+    <% content_for :dialog_attr do %> id="student_dialog" <% end %>
+    <% content_for :dialog_title do %>Add new Student<% end %>
+    <form action="/students/<%= @subject_id %>/search" data-js-user-form='true' accept-charset='UTF-8' data-remote='true' method="post">
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+        <label>People</label>
+        <input type="text" name="student[name]">
+        <input type="submit" value="Search" >
+    </form>
+    <div id='users'>
+        <%= render 'shared/list'%>
+    </div>
+<% end %>
+<%= render "shared/dialog" %>

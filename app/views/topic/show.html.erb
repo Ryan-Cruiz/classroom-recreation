@@ -1,0 +1,27 @@
+<div class="container">
+<%= render 'shared/header' %>
+    <h2>To Do</h2>
+    <div class="student-container">
+<% @s.each do |se| %>
+    <% subs = Subject.find(se.subject_id).posts %>
+    <% subs.each do |sb| %>
+        <% if sb.due_date.to_i < Time.now.to_i && sb.due_date != nil %>
+        <div class="card ">
+        <a href='subjects/<%= se.subject_id %>/post/<%= sb.id %>' class='btn card-body text-start'>
+            <h5><%= sb.subject.title %> (<span class='text-danger'>Past Due</span>)</h5>
+            <p><%= sb.title %> - <%= sb.due_date.strftime('%d/%m/%Y - %H:%M%p') %></p>
+        </a>
+        </div>
+        <% elsif sb.due_date != nil %>
+            <div class="card ">
+            <a href='subjects/<%= se.subject_id %>/post/<%= sb.id %>' class='btn card-body text-start'>
+                <h5><%= sb.subject.title %></h5>
+               <p><%= sb.title %> - <%= sb.due_date.strftime('%d/%m/%Y - %H:%M%p') %></p>
+            </a>
+        </div>
+            <% end %>
+        <% end %>
+    <% end %>
+    </div>
+</div>
+

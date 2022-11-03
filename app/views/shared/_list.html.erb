@@ -1,0 +1,9 @@
+<% @search_query.each do |u| %>
+    <% if u.user_type != '2'%>
+    <form action='/students/<%= @subject_id %>/add/<%= u.id %>' method='post'>
+        <label class='d-inline-block'><%= u.full_name %></label>
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+        <input type='submit' class='btn btn-link  d-inline-block' value='Add Student'>
+    </form>
+    <% end %>
+<% end %>

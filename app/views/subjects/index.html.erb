@@ -1,0 +1,32 @@
+<%= render "shared/header" %>
+<div class="search-box row">
+    <div class='col-md-6 '>
+    <% if @user == '2' %>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#subject_dialog">Create New Subject</button>
+        <% end %>
+    </div>
+    <form action="/subjects/search" data-js-subject-form='true' accept-charset='UTF-8' data-remote='true' class="nav-end col-md-4 " method='post'>
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+        <input type="text" name="subject[title]" placeholder="Search Subject">
+        <input type="submit" value="Search">
+    </form>
+</div>
+<div id='subjects'>
+<%= render 'shared/subjects'%>
+</div>
+<% content_for :dialog_body do %>
+    <% content_for :dialog_attr do %> id="subject_dialog" <% end %>
+    <% content_for :dialog_title do %>New Subject<% end %>
+    <form action="/subjects" method="post">
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+        <p>Title</p>
+        <input type="text" name="subject[title]">
+        <p>Section</p>
+        <input type="text" name="subject[section]">
+        <div class='modal-footer'>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <input type="submit" value="Create" class='btn btn-success'>
+        </div>
+    </form>
+<% end %>
+<%= render "shared/dialog" %>

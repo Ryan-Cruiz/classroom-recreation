@@ -1,0 +1,19 @@
+<div class="login-reg">
+    <form action='/users' method='post' enctype="multipart/form-data" accept-charset="UTF-8" class="needs-validation" novalidate>
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+        <p>First Name <input type='text' name='user[first_name]' class="form-control" required></p>
+        <p>Last Name <input type='text' name='user[last_name]' class="form-control" required></p>
+        <p>Email <input type='text' name='user[email]' class="form-control" required></p>
+        <p>Password <input type='password' name='user[password]' class="form-control" required></p>
+        <p>Confirm Password<input type='password' name='user[password_confirmation]' class="form-control" required></p>
+        <p>Type
+        <select name='user[user_type]' class="form-select" required>
+            <option value="" selected disabled>Select</option>
+            <option value='1'>Student</option>
+            <option value='2'>Teacher</option>
+        </select>
+        </p>
+        <input type='submit' value='Create' class="btn btn-success">
+        <a href='/login'> Back to Login </a>
+    </form>
+</div>

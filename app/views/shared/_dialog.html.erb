@@ -1,0 +1,14 @@
+<!-- Modal -->
+<div class="modal fade" <%= yield :dialog_attr %> tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"><%= yield :dialog_title %></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <%= yield :dialog_body %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<%= render 'shared/header'%>
+    <div class="post-box m-3">
+    
+        <h2 class='d-inline-block col-md-6'><%= @post.title %></h2>
+        <% if @user.user_type == '2' %>
+        <div class="nav-end text-end d-inline-block col-md-5 btn-group" role="group" aria-label="Basic outlined example">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_dialog">Edit</button>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_dialog">Delete</button>
+        </div>
+        <% end %>
+        <% if @post.due_date != nil %>
+            <p>Due Until: <%= @post.due_date.strftime('%d/%m/%Y - %H:%M%p')%></p>
+        <% end %>
+        <div class='border m-4 mt-5'>
+            <p><strong>Instructions:</strong></p>
+            <p><%= @post.content %></p>
+        </div>
+        <div class="comment-box">
+            <form action="/subjects/<%= @subject.id %>/comment/<%= @post.id%>" method="post">
+                <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                <label><%= @user.full_name %>:</label>
+                <div class="form-floating">
+                    <textarea class="form-control" name="comment[content]" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">Comment</label>
+                </div>
+                <input type="submit" value="Post" class='btn btn-success'>
+            </form>
+            <div class="comment-section">
+        <% @postComments.each do |comment| %>
+                <div class="card m-2">
+                    <div class="card-body">
+                        <p><%= User.find(comment.user_id).full_name %> - <%= comment.created_at.strftime('%d/%m/%Y - %H:%M%p')%></p>
+                        <p><%= comment.content %></p>
+                    </div>
+                </div>
+            <% @replies.each do |reply| %>
+                <% if reply.imageable_id == comment.id %>
+                <div class="card w-80 replies-section">
+                    <div class="card-body">
+                        <p><%= User.find(reply.user_id).full_name %> - <%= reply.created_at.strftime('%d/%m/%Y - %H:%M%p')%></p>
+                        <p><%= reply.content %></p>
+                    </div>
+                </div>
+                <%end %>
+            <% end %>
+                <form action="/subjects/<%= @subject.id %>/reply/<%= @post.id %>/<%= comment.id%>" method="post" class='mx-4'>
+                    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                    <label><%= @user.full_name %>:</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" name="comment[content]" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">Reply</label>
+                    </div>
+                    <input type="submit" value="Post" class='btn btn-success'>
+                </form>
+        <% end %>
+            </div>
+        </div>
+    </div>
+
+        <!-- Modal -->
+    <div class="modal fade" id="delete_dialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Deleting <%= @post.title %></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p> Deleting this will delete all of its relation. Are you sure? </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="/subjects/<%= @subject.id %>/post/<%= @post.id %>" method='post'>
+                        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                        <input type='hidden' name='_method' value='delete'>
+                        <input type="submit" class="btn btn-danger" value='Yes, I understand'>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <% content_for :dialog_body do %>
+            <% content_for :dialog_attr do %> id="edit_dialog" <% end %>
+            <% content_for :dialog_title do %>Edit<% end %>
+            <form action="/subjects/<%= @subject.id %>/post/<%= @post.id %>" method="post">
+                <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                <input type='hidden' name='_method' value='patch'>
+                <label>Title: <input type="text" name="topic[title]" value='<%= @post.title %>'></label>
+                <% if @post.due_date != nil %>
+                <label>Due Date:<input type="date" value="<%= @post.due_date.strftime('%Y-%m-%d')%>" name="topic[due_date]" ></label>
+                <% end %>
+                <div class="form-floating">
+                    <textarea class="form-control" name="topic[content]" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><%= @post.content %></textarea>
+                    <label for="floatingTextarea2">Instructions</label>
+                </div>
+                <div class='modal-footer'>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" value="Edit" class='btn btn-success'>
+                </div>
+            </form>
+        <% end %>
+<%= render 'shared/dialog'%>
