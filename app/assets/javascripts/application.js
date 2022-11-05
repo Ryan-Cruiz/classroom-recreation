@@ -8,10 +8,10 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//= require bootstrap
 //= require trix
 //= require actiontext
 //= require popper
+//= require bootstrap
 //= require jquery3
 //= require jquery_ujs
 //= require_tree .

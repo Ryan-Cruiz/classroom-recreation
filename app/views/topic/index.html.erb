@@ -1,13 +1,18 @@
 <%= render 'shared/header'%>
     <div class="post-box m-3">
     
-        <h2 class='d-inline-block col-md-6'><%= @post.title %></h2>
         <% if @user.user_type == '2' %>
-        <div class="nav-end text-end d-inline-block col-md-5 btn-group" role="group" aria-label="Basic outlined example">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_dialog">Edit</button>
-            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_dialog">Delete</button>
+        <div class="dropdown">
+            <a class="btn pe-4 dropdown-toggle float-end" href="#" role="button" id="postOption" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="postOption">
+                <li><button type="button" class=" dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_dialog">Edit</button></li>
+                <li> <button type="button" class=" dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_dialog">Delete</button></li>
+            </ul>
         </div>
         <% end %>
+        <h2 class='d-inline-block col-md-6'><%= @post.title %></h2>
         <% if @post.due_date != nil %>
             <p>Due Until: <%= @post.due_date.strftime('%d/%m/%Y - %H:%M%p')%></p>
         <% end %>
@@ -38,7 +43,7 @@
                 <div class="card w-80 replies-section">
                     <div class="card-body">
                         <p><%= User.find(reply.user_id).full_name %> - <%= reply.created_at.strftime('%d/%m/%Y - %H:%M%p')%></p>
-                        <p><%= reply.content %></p>
+                        <%= reply.content %>
                     </div>
                 </div>
                 <%end %>

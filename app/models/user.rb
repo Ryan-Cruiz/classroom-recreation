@@ -21,6 +21,10 @@ class User < ApplicationRecord
       return unless avatar.content_type.in?(%w[image/png image/jpg image/jfif image/webp image/jpeg])
       avatar.variant(resize_to_limit: [150,150]).processed
     end
+    def avatar_image
+      return unless avatar.content_type.in?(%w[image/png image/jpg image/jfif image/webp image/jpeg])
+      avatar.variant(resize_to_limit: [40,40]).processed
+    end
     private
         def downcase_email
           self.email.downcase!

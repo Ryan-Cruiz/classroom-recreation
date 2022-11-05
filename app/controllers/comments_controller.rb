@@ -3,7 +3,11 @@ class CommentsController < ApplicationController
         comment = Comment.new(comment_param)
         comment.user_id = session[:id]
         comment.imageable = Subject.find(params[:id])
-        if comment.save
+        post = AllPost.new
+        post.user_id = session[:id]
+        post.subject_id = params[:id]
+        post.imageable = comment
+        if comment.save && post.save
             puts 'success'
         else
             puts comment.errors.full_messages
