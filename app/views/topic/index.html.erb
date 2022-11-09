@@ -18,7 +18,7 @@
         <% end %>
         <div class='border m-4 mt-5'>
             <p><strong>Instructions:</strong></p>
-            <p><%= @post.content %></p>
+            <%= @post.content %>
         </div>
         <div class="comment-box">
             <form action="/subjects/<%= @subject.id %>/comment/<%= @post.id%>" method="post">
@@ -87,17 +87,16 @@
         <% content_for :dialog_body do %>
             <% content_for :dialog_attr do %> id="edit_dialog" <% end %>
             <% content_for :dialog_title do %>Edit<% end %>
-            <form action="/subjects/<%= @subject.id %>/post/<%= @post.id %>" method="post">
+            <form action="/subjects/<%= @subject.id %>/post/<%= @post.id %>" method="post" class='needs-validation container-sm' novalidate>
                 <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
                 <input type='hidden' name='_method' value='patch'>
-                <label>Title: <input type="text" name="topic[title]" value='<%= @post.title %>'></label>
+                <label>Title: <input type="text" name="topic[title]" value='<%= @post.title %>' required></label>
                 <% if @post.due_date != nil %>
                 <label>Due Date:<input type="date" value="<%= @post.due_date.strftime('%Y-%m-%d')%>" name="topic[due_date]" ></label>
                 <% end %>
-                <div class="form-floating">
-                    <textarea class="form-control" name="topic[content]" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><%= @post.content %></textarea>
-                    <label for="floatingTextarea2">Instructions</label>
-                </div>
+                <label class='d-block m-2'>Instruction:</label>
+                <input type="hidden" name="topic[content]" id="trix_input_12" autocomplete="off"  value='<%= @post.content %>' required/>
+                <trix-editor id="topic[content]" input="trix_input_12" class="trix-content form-control" required data-direct-upload-url="http://localhost:3000/rails/active_storage/direct_uploads" data-blob-url-template="http://localhost:3000/rails/active_storage/blobs/redirect/:signed_id/:filename"></trix-editor>
                 <div class='modal-footer'>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <input type="submit" value="Edit" class='btn btn-success'>

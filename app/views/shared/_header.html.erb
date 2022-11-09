@@ -11,11 +11,19 @@
                         <a class="nav-link active" aria-current="page" href="/to_do">To-Do</a>
                     </li>
                 </ul>
-                <div class="d-flex">
-                    <a href='/profile'>Profile</a>
-                    <a href="/log_out" class='mx-2'>Log Out</a>
+                <div class="d-inline- dropdown">
+                    <a class="btn pe-4 dropdown-toggle float-end" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <% if User.find(session[:id]).avatar.attached? %>
+                        <%= image_tag(User.find(session[:id]).avatar_image, class: "border rounded")%>
+                    <% else %>
+                        <%= User.find(session[:id]).full_name %>
+                    <% end %>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a href='/profile' class='dropdown-item'>Profile</a></li>
+                        <li><a href="/log_out" class='dropdown-item'>Log Out</a></li>
+                    </ul>
                 </div>
-                
             </div>
         </div>
     </nav>

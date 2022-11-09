@@ -31,6 +31,7 @@ class TopicController < ApplicationController
     end
     def delete
         spec_comment = Comment.where(imageable: Postcomment.find_by(post_id: params[:id])).destroy_all
+        all_post = AllPost.find_by(imageable: Post.find(params[:id])).delete
         post = Post.find(params[:id]).destroy
         redirect_to "/subjects/#{params[:subject_id]}"
     end

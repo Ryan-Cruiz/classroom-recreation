@@ -9,7 +9,6 @@
         </div>
     </div>
     <div class='container-md'>
-    
         <form action="/subjects/<%= @subject.id %>/comment" method="post" class='needs-validation container-sm' novalidate>
             <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
             <label><%= @user.full_name %>:</label>
@@ -38,14 +37,13 @@
         <% content_for :dialog_body do %>
             <% content_for :dialog_attr do %> id="createPost_dialog" <% end %>
             <% content_for :dialog_title do %>New Post<% end %>
-                <form action="/subjects/<%= @subject.id %>/post" method="post">
+                <form action="/subjects/<%= @subject.id %>/post" method="post" class='needs-validation container-sm' novalidate>
                     <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
-                    <label>Title: <input type="text" name="topic[title]" class='form-control'></label>
+                    <label>Title: <input type="text" name="topic[title]" class='form-control' required></label>
                     <label>Due Date:<input type="date" name="topic[due_date]" class='form-control'></label>
-                    <div class="form-floating m-2">
-                    <textarea class="form-control" name="topic[content]" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                    <label for="floatingTextarea2">Instructions</label>
-                    </div>
+                    <label class='d-block m-2'>Instruction:</label>
+                    <input type="hidden" name="topic[content]" id="trix_input_12" autocomplete="off" required/>
+                    <trix-editor id="topic[content]" input="trix_input_12" class="trix-content form-control" required data-direct-upload-url="http://localhost:3000/rails/active_storage/direct_uploads" data-blob-url-template="http://localhost:3000/rails/active_storage/blobs/redirect/:signed_id/:filename"></trix-editor>
                     <div class='modal-footer'>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <input type="submit" value="Create" class='btn btn-success'>

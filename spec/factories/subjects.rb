@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :subject do
-    title { "MyString" }
-    section { "MyString" }
-    user { nil }
+    title { "testSub" }
+    section { "test 1" }
+    user { User.first }
   end
 end

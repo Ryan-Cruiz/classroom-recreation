@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :specific_subject do
-    subject { nil }
-    user { nil }
+    subject { Subject.first }
+    user { User.first }
   end
 end
