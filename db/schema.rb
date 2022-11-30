@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_31_124037) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_05_073706) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_31_124037) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "all_posts", force: :cascade do |t|
+    t.string "imageable_type", null: false
+    t.bigint "imageable_id", null: false
+    t.bigint "subject_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["imageable_type", "imageable_id"], name: "index_all_posts_on_imageable"
+    t.index ["subject_id"], name: "index_all_posts_on_subject_id"
+    t.index ["user_id"], name: "index_all_posts_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -122,6 +134,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_31_124037) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "all_posts", "subjects"
+  add_foreign_key "all_posts", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "postcomments", "posts"
   add_foreign_key "postcomments", "users"

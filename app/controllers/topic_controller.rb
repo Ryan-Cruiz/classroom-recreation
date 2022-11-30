@@ -12,9 +12,14 @@ class TopicController < ApplicationController
         post = Post.new(post_param)
         post.user_id = session[:id]
         post.subject_id = params[:id]
-        if post.save
+        allPosts = AllPost.new
+        allPosts.user_id = session[:id]
+        allPosts.subject_id = params[:id]
+        allPosts.imageable = post
+        if post.save && allPosts.save
             puts 'success'
         else
+            puts allPosts.errors.full_messages
             puts post.errors.full_messages
             puts 'error'
         end
@@ -22,11 +27,11 @@ class TopicController < ApplicationController
     end
     def show
         @user = User.find(session[:id])
-        @s = SpecificSubject.where(user_id: @user)
-        
+        @specific_subs = SpecificSubject.where(user_id: @user).order('created_at DESC')
     end
     def delete
         spec_comment = Comment.where(imageable: Postcomment.find_by(post_id: params[:id])).destroy_all
+        all_post = AllPost.find_by(imageable: Post.find(params[:id])).delete
         post = Post.find(params[:id]).destroy
         redirect_to "/subjects/#{params[:subject_id]}"
     end

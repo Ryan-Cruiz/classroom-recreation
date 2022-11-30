@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :postcomment do
     content { "MyText" }
-    post { nil }
-    user { nil }
+    post { Post.first }
+    user { User.first }
   end
 end

@@ -12,7 +12,8 @@ class SubjectsController < ApplicationController
         @posts = Post.where(subject: params[:id]).order("created_at DESC")
         @subject = Subject.find(params[:id])
         @user = User.find(session[:id])
-        @comments = Comment.where(imageable: Subject.find(params[:id])).order('created_at DESC')
+        # @comments = Comment.where(imageable: Subject.find(params[:id])).where.not(imageable_type: "Postcomment").order('created_at DESC')
+        @comments = AllPost.where(subject: Subject.find(params[:id])).order('created_at DESC')
     end
     def search
         @user = User.find(session[:id]).user_type
